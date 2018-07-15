@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Cache\pokedex\pokedex_2.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="pokedex_2.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PokeApi-NJ.NET" Version="1.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Poke.Model\Poke.Model.csproj" />
+    <ProjectReference Include="..\Poke.Repository\Poke.Repository.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Cache\pokedex\" />
+  </ItemGroup>
+
+</Project>
