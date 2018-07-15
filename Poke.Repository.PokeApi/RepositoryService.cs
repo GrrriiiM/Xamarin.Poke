@@ -12,7 +12,13 @@ namespace Poke.Repository.PokeApi
         private MonsterRepository getMonsterRepository => _monsterRepository = _monsterRepository ?? new MonsterRepository();
 
 
+        private RegionRepository _regionRepository;
+        private RegionRepository getRegionRepository => _regionRepository = _regionRepository ?? new RegionRepository();
+
+
         public async Task<IEnumerable<MonsterResume>> MonsterListAllResumePerRegion(int regionId) => await getMonsterRepository.ListAllResumePerRegion(regionId);
+
+        public async Task<IEnumerable<Region>> RegionListAll() => await getRegionRepository.ListAll();
 
     }
 }

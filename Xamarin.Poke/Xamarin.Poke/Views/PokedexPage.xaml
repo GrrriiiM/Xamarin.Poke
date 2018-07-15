@@ -4,6 +4,7 @@
 			 xmlns:poke="clr-namespace:Xamarin.Poke"
              x:Class="Xamarin.Poke.Views.PokedexPage"
 			 xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"	
+			 xmlns:xfg="clr-namespace:XFGloss;assembly=XFGloss"
 			 xmlns:c="clr-namespace:Xamarin.Poke.CustomControls"
 			 Appearing="ContentPage_Appearing">
     <ContentPage.Content>
@@ -58,139 +59,6 @@
 					</c:CustomListView.ItemTemplate>
 				</c:CustomListView>
 
-				<ContentView TranslationY="1000"
-							 x:Name="selecaoArea"
-							 BackgroundColor="{StaticResource principalColor}"
-							 AbsoluteLayout.LayoutFlags="All"  
-							 AbsoluteLayout.LayoutBounds="0,0,1,1" Padding="0, 200, 0, 100" Margin="0">
-					<ScrollView x:Name="selecao">
-						<StackLayout Spacing="20">
-							<Label Text="KANTO"
-								   HorizontalOptions="CenterAndExpand"
-								   HorizontalTextAlignment="Center"
-								   FontFamily="{StaticResource font8bit}"
-								   FontSize="{StaticResource fontBig}"
-								   TextColor="{StaticResource titleBarColor}"/>
-							<Label Text="JOTO"
-								   HorizontalOptions="CenterAndExpand"
-								   HorizontalTextAlignment="Center"
-								   FontFamily="{StaticResource font8bit}"
-								   FontSize="{StaticResource fontBig}"
-								   TextColor="{StaticResource titleBarColor}"/>
-							<Label Text="HOEN"
-								   HorizontalOptions="CenterAndExpand"
-								   HorizontalTextAlignment="Center"
-								   FontFamily="{StaticResource font8bit}"
-								   FontSize="{StaticResource fontBig}"
-								   TextColor="{StaticResource titleBarColor}"/>
-							<Label Text="ALOLA"
-								   HorizontalOptions="CenterAndExpand"
-								   HorizontalTextAlignment="Center"
-								   FontFamily="{StaticResource font8bit}"
-								   FontSize="{StaticResource fontBig}"
-								   TextColor="{StaticResource titleBarColor}"/>
-							<Label Text="KANTO"
-								   HorizontalOptions="CenterAndExpand"
-								   HorizontalTextAlignment="Center"
-								   FontFamily="{StaticResource font8bit}"
-								   FontSize="{StaticResource fontBig}"
-								   TextColor="{StaticResource titleBarColor}"/>
-							<Label Text="JOTO"
-								   HorizontalOptions="CenterAndExpand"
-								   HorizontalTextAlignment="Center"
-								   FontFamily="{StaticResource font8bit}"
-								   FontSize="{StaticResource fontBig}"
-								   TextColor="{StaticResource titleBarColor}"/>
-							<Label Text="HOEN"
-								   HorizontalOptions="CenterAndExpand"
-								   HorizontalTextAlignment="Center"
-								   FontFamily="{StaticResource font8bit}"
-								   FontSize="{StaticResource fontBig}"
-								   TextColor="{StaticResource titleBarColor}"/>
-							<Label Text="ALOLA"
-								   HorizontalOptions="CenterAndExpand"
-								   HorizontalTextAlignment="Center"
-								   FontFamily="{StaticResource font8bit}"
-								   FontSize="{StaticResource fontBig}"
-								   TextColor="{StaticResource titleBarColor}"/>
-							<Label Text="KANTO"
-								   HorizontalOptions="CenterAndExpand"
-								   HorizontalTextAlignment="Center"
-								   FontFamily="{StaticResource font8bit}"
-								   FontSize="{StaticResource fontBig}"
-								   TextColor="{StaticResource titleBarColor}"/>
-							<Label Text="JOTO"
-								   HorizontalOptions="CenterAndExpand"
-								   HorizontalTextAlignment="Center"
-								   FontFamily="{StaticResource font8bit}"
-								   FontSize="{StaticResource fontBig}"
-								   TextColor="{StaticResource titleBarColor}"/>
-							<Label Text="HOEN"
-								   HorizontalOptions="CenterAndExpand"
-								   HorizontalTextAlignment="Center"
-								   FontFamily="{StaticResource font8bit}"
-								   FontSize="{StaticResource fontBig}"
-								   TextColor="{StaticResource titleBarColor}"/>
-							<Label Text="ALOLA"
-								   HorizontalOptions="CenterAndExpand"
-								   HorizontalTextAlignment="Center"
-								   FontFamily="{StaticResource font8bit}"
-								   FontSize="{StaticResource fontBig}"
-								   TextColor="{StaticResource titleBarColor}"/>
-							<Label Text="KANTO"
-								   HorizontalOptions="CenterAndExpand"
-								   HorizontalTextAlignment="Center"
-								   FontFamily="{StaticResource font8bit}"
-								   FontSize="{StaticResource fontBig}"
-								   TextColor="{StaticResource titleBarColor}"/>
-							<Label Text="JOTO"
-								   HorizontalOptions="CenterAndExpand"
-								   HorizontalTextAlignment="Center"
-								   FontFamily="{StaticResource font8bit}"
-								   FontSize="{StaticResource fontBig}"
-								   TextColor="{StaticResource titleBarColor}"/>
-							<Label Text="HOEN"
-								   HorizontalOptions="CenterAndExpand"
-								   HorizontalTextAlignment="Center"
-								   FontFamily="{StaticResource font8bit}"
-								   FontSize="{StaticResource fontBig}"
-								   TextColor="{StaticResource titleBarColor}"/>
-							<Label Text="ALOLA"
-								   HorizontalOptions="CenterAndExpand"
-								   HorizontalTextAlignment="Center"
-								   FontFamily="{StaticResource font8bit}"
-								   FontSize="{StaticResource fontBig}"
-								   TextColor="{StaticResource titleBarColor}"/>
-							<Label Text="KANTO"
-								   HorizontalOptions="CenterAndExpand"
-								   HorizontalTextAlignment="Center"
-								   FontFamily="{StaticResource font8bit}"
-								   FontSize="{StaticResource fontBig}"
-								   TextColor="{StaticResource titleBarColor}"/>
-							<Label Text="JOTO"
-								   HorizontalOptions="CenterAndExpand"
-								   HorizontalTextAlignment="Center"
-								   FontFamily="{StaticResource font8bit}"
-								   FontSize="{StaticResource fontBig}"
-								   TextColor="{StaticResource titleBarColor}"/>
-							<Label Text="HOEN"
-								   HorizontalOptions="CenterAndExpand"
-								   HorizontalTextAlignment="Center"
-								   FontFamily="{StaticResource font8bit}"
-								   FontSize="{StaticResource fontBig}"
-								   TextColor="{StaticResource titleBarColor}"/>
-							<Label Text="ALOLA"
-								   HorizontalOptions="CenterAndExpand"
-								   HorizontalTextAlignment="Center"
-								   FontFamily="{StaticResource font8bit}"
-								   FontSize="{StaticResource fontBig}"
-								   TextColor="{StaticResource titleBarColor}"/>
-
-
-						</StackLayout>
-					</ScrollView>
-				</ContentView>
-
 				<ContentView HeightRequest="200"
 							 x:Name="header"
 							 BackgroundColor="{StaticResource principalColor}"
@@ -221,36 +89,64 @@
 							   VerticalTextAlignment="Start"
 							   HorizontalOptions="CenterAndExpand"
 							   HorizontalTextAlignment="Center"/>
+						<AbsoluteLayout x:Name="listViewSelecaoRegiao"
+							AbsoluteLayout.LayoutFlags="PositionProportional"
+										  AbsoluteLayout.LayoutBounds="0.5, 0.5"
+										HeightRequest="550"
+										  Opacity="0">
+							<c:CustomListView AbsoluteLayout.LayoutFlags="All"
+										  AbsoluteLayout.LayoutBounds="0,0,1,1"
+										  RowHeight="{StaticResource listViewRowHeight}"
+										  ItemsSource="{Binding Regions}">
+
+							<c:CustomListView.ItemTemplate>
+								<DataTemplate>
+									<ViewCell>
+										<Label FontFamily="{StaticResource font8bit}"
+											   FontSize="{StaticResource fontMedium}"
+											   TextColor="{StaticResource titleBarColor}"
+											   Text="{Binding Name}"
+											   VerticalOptions="CenterAndExpand"
+											   VerticalTextAlignment="Center"
+											   HorizontalOptions="CenterAndExpand"
+											   HorizontalTextAlignment="Center"/>
+									</ViewCell>
+								</DataTemplate>
+							</c:CustomListView.ItemTemplate>
+						</c:CustomListView>
+						</AbsoluteLayout>
+
 						<ContentView AbsoluteLayout.LayoutFlags="PositionProportional"
-									 AbsoluteLayout.LayoutBounds="0.5,0.9"
-									 Padding="5">
+									 AbsoluteLayout.LayoutBounds="0.5, 1"
+									 Padding="{StaticResource buttonPadding}">
 							<ContentView.GestureRecognizers>
 								<TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1"/>
 							</ContentView.GestureRecognizers>
 						<Image x:Name="arrow"
 								Source="arrow_white.png"
-								HeightRequest="30"
-								WidthRequest="30"
+								HeightRequest="{StaticResource buttonImageSize}"
+								WidthRequest="{StaticResource buttonImageSize}"
 								BackgroundColor="{StaticResource principalColor}"/>
 						</ContentView>
 						<Grid x:Name="pesquisa"
-							  HeightRequest="40"
-							  WidthRequest="360"
+							  HeightRequest="{StaticResource buttonSize}"
+							  WidthRequest="{StaticResource screenDensityWidth}"
 							  AbsoluteLayout.LayoutFlags="PositionProportional"
 							  AbsoluteLayout.LayoutBounds="0,0"
-							  TranslationX="320">
+							  TranslationX="{StaticResource screenDensityWidthMinusButtonSize}">
 							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="40"/>
+								<ColumnDefinition Width="{StaticResource buttonSize}"/>
 								<ColumnDefinition Width="*"/>
 							</Grid.ColumnDefinitions>
-							<ContentView Padding="5"
-										 Grid.Column="0">
+							<ContentView Padding="{StaticResource buttonPadding}"
+										 Grid.Column="0"
+										 WidthRequest="{StaticResource buttonSize}">
 								<ContentView.GestureRecognizers>
 									<TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
 								</ContentView.GestureRecognizers>
 								<Image x:Name="search"
-									   HeightRequest="30"
-									   WidthRequest="30"
+									   HeightRequest="{StaticResource buttonImageSize}"
+									   WidthRequest="{StaticResource buttonImageSize}"
 									   VerticalOptions="CenterAndExpand"
 									   HorizontalOptions="Start"
 									   BackgroundColor="{StaticResource principalColor}"
@@ -260,8 +156,8 @@
 								   Grid.Column="1"
 								   Opacity="0"
 								   x:Name="pesquisaEntry"
-								   WidthRequest="320"
-								   Margin="5"
+								   WidthRequest="{StaticResource screenDensityWidthMinusButtonSize}"
+								   Margin="{StaticResource buttonPadding}"
 								   PlaceholderColor="{StaticResource textColor}"
 								   Placeholder="Digite o nome..."
 								   InputTransparent="True"

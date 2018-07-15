@@ -6,9 +6,13 @@
 
   <ItemGroup>
     <None Remove="Cache\pokedex\pokedex_2.json" />
+    <None Remove="pokedex.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="pokedex.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="pokedex_2.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>

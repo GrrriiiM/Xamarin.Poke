@@ -9,5 +9,6 @@ namespace Poke.Repository
     {
         Task<IEnumerable<MonsterResume>> MonsterListAllResumePerRegion(int regionId);
 
+        Task<IEnumerable<Region>> RegionListAll();
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.Poke.ViewModels;
@@ -30,16 +30,18 @@ namespace Xamarin.Poke.Views
         }
 
         private double tamanhoHeader;
-        private double tamanhoMenorHeader = 40;
+        private double buttonSize = (double)App.Current.Resources["buttonSize"];
+        private double screenHeight = (double)App.Current.Resources["screenDensityHeight"];
+        private double screenWidth = (double)App.Current.Resources["screenDensityWidth"];
 
         private void MonsterResumeListView_Scrolled(object sender, CancelableScrolledEventArgs e)
         {
             var novoTamanho = tamanhoHeader - e.ScrollY;
 
-            if (novoTamanho <= tamanhoMenorHeader) novoTamanho = tamanhoMenorHeader;
+            if (novoTamanho <= buttonSize) novoTamanho = buttonSize;
             if (novoTamanho >= tamanhoHeader) novoTamanho = tamanhoHeader;
 
-            if (novoTamanho <= tamanhoHeader && novoTamanho >= tamanhoMenorHeader)
+            if (novoTamanho <= tamanhoHeader && novoTamanho >= buttonSize)
             {
                 this.header.HeightRequest = novoTamanho;
             }
@@ -47,20 +49,32 @@ namespace Xamarin.Poke.Views
 
         private void Header_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(this.header.HeightRequest))
+            if (e.PropertyName == nameof(this.header.HeightRequest) || e.PropertyName == nameof(this.header.Height))
             {
+                var height = e.PropertyName == nameof(this.header.HeightRequest) ? this.header.HeightRequest : this.header.Height;
+
+                var indiceMenor = (height - this.buttonSize) / (this.tamanhoHeader - this.buttonSize);
+                indiceMenor = indiceMenor > 1 ? 1 : indiceMenor;
+
                 var fontBig = (double)App.Current.Resources["fontBig"];
-                var fontSmall = (double)App.Current.Resources["fontSmall"];
-                var indice = (this.header.HeightRequest - this.tamanhoMenorHeader) / (this.tamanhoHeader - this.tamanhoMenorHeader);
-                this.headerSubTitulo.Opacity = 1 - ((1 - indice) * 2);
-                this.arrow.Opacity = 1 - ((1 - indice) * 2);
-                AbsoluteLayout.SetLayoutBounds(this.headerTitulo, new Rectangle(0.5 * (indice), .6, -1, -1));
-                this.headerTitulo.Scale = (fontSmall + ((fontBig - fontSmall) * indice)) / fontBig;
+                var fontSmall = (double)App.Current.Resources["fontMedium"];
+                    
+                this.headerSubTitulo.Opacity = 1 - ((1 - indiceMenor) * 2);
+                this.arrow.Opacity = 1 - ((1 - indiceMenor) * 2);
+                AbsoluteLayout.SetLayoutBounds(this.headerTitulo, new Rectangle(0.5 * (indiceMenor), .6, -1, -1));
+                this.headerTitulo.Scale = (fontSmall + ((fontBig - fontSmall) * indiceMenor)) / fontBig;
                 if (this.pesquisaEntry.IsFocused)
                 {
                     this.hidePesquisa();
                     this.pesquisaEntry.Unfocus();
                 }
+
+                //var indiceMaior = (this.screenHeight - height) / (this.screenHeight - this.tamanhoHeader);
+                //indiceMaior = indiceMaior > 1 ? 1 : indiceMaior;
+                //this.headerTitulo.Opacity = 1 - ((1 - indiceMaior) * 2);
+
+                //this.listViewSelecaoRegiao.Opacity = ((1 - indiceMaior) * 2);
+
             }
         }
 
@@ -100,7 +114,7 @@ namespace Xamarin.Poke.Views
 
         private async Task hidePesquisa()
         {
-            this.pesquisa.TranslateTo(320, 0, 300, Easing.BounceOut);
+            this.pesquisa.TranslateTo(screenWidth - buttonSize, 0, 300, Easing.BounceOut);
             this.pesquisaEntry.FadeTo(0, 200);
         }
 
@@ -113,23 +127,37 @@ namespace Xamarin.Poke.Views
                 {
                     view.ScaleTo(0.8, 100);
                     view.ScaleTo(1, 100);
-                    view.RotateTo(180, 300, Easing.BounceOut);
+                    
                     //view.RotateTo(180, 100);
                     //view.TranslateTo(0, 500, 100, Easing.BounceOut);
-                    this.selecaoArea.TranslationY = -500;
-                    await this.selecaoArea.TranslateTo(0, 0, 100);
-                    this.selecao.FadeTo(1, 200);
+                    this.headerTitulo.FadeTo(0, 200, Easing.SinOut);
+                    this.headerSubTitulo.TranslateTo(0, - 190, 200, Easing.SinOut);
+                    //this.search.TranslateTo(buttonSize, 0, 200, Easing.SinOut);
+                    this.search.FadeTo(0, 200, Easing.SinOut);
+                    //this.arrow.TranslateTo(0, 20, 200);
+                    await this.header.LayoutTo(new Rectangle(this.header.X, this.header.Y, this.header.Width, screenHeight), 200, Easing.SinOut);
+                    this.listViewSelecaoRegiao.FadeTo(1, 100);
+                    view.RotateTo(180, 300, Easing.BounceOut);
+                    //this.selecao.FadeTo(1, 200);
                 }
                 else
                 {
                     view.ScaleTo(0.8, 100);
                     view.ScaleTo(1, 100);
-                    view.RotateTo(0, 300, Easing.BounceOut);
+                    
                     //view.RotateTo(0, 100);
                     //view.TranslateTo(0, 0, 100, Easing.BounceOut);
-                    await this.selecao.FadeTo(0, 200);
-                    await this.selecaoArea.TranslateTo(0, -500, 100);
-                    this.selecaoArea.TranslationY = 1000;
+                    //await this.selecao.FadeTo(0, 200);
+                    //await this.selecaoArea.TranslateTo(0, -500, 100);
+                    //this.selecaoArea.TranslationY = 1000;
+                    this.listViewSelecaoRegiao.FadeTo(0, 100);
+                    await view.RotateTo(0, 300, Easing.BounceOut);
+                    this.headerTitulo.FadeTo(1, 200, Easing.SinOut);
+                    this.headerSubTitulo.TranslateTo(0, 0, 200, Easing.SinOut);
+                    //this.search.TranslateTo(0, 0, 200, Easing.SinOut);
+                    this.search.FadeTo(1, 200, Easing.SinOut);
+                    //this.arrow.TranslateTo(0, 0, 200);
+                    this.header.LayoutTo(new Rectangle(this.header.X, this.header.Y, this.header.Width, this.tamanhoHeader), 200, Easing.SinOut);
                 }
             });
 

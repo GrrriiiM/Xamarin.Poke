@@ -16,6 +16,7 @@ namespace Xamarin.Poke.ViewModels
 
         
         public ObservableCollection<MonsterResume> MonstersResume { get; set; } = new ObservableCollection<MonsterResume>();
+        public ObservableCollection<Region> Regions { get; set; } = new ObservableCollection<Region>();
         public ICommand LoadCommand { get; set; }
 
         private readonly IRepositoryService _repositoryService;
@@ -31,6 +32,12 @@ namespace Xamarin.Poke.ViewModels
             foreach(var i in (await this._repositoryService.MonsterListAllResumePerRegion(2)))
             {
                 this.MonstersResume.Add(i);
+            }
+
+            this.Regions.Clear();
+            foreach (var i in (await this._repositoryService.RegionListAll()))
+            {
+                this.Regions.Add(i);
             }
         }
     }

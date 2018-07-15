@@ -29,7 +29,7 @@ namespace Poke.Repository.PokeApi
             string json = "";
             using (var reader = new System.IO.StreamReader(stream))
             {
-                json = reader.ReadToEnd();
+                json = await reader.ReadToEndAsync();
             }
             
 
