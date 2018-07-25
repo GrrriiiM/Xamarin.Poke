@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace Xamarin.Poke.CustomControls
 {
-    public class CustomListView : Xamarin.Forms.ListView
+    public class CustomListView : Xamarin.Forms.ListView, Components.IScrollable
     {
         #region Ctor
 
@@ -16,14 +16,14 @@ namespace Xamarin.Poke.CustomControls
         {
         }
 
-        private double _scrollPosition;
-        public double ScrollPosition
+        private double _scrollYPosition;
+        public double ScrollYPosition
         {
-            get => this._scrollPosition;
+            get => this._scrollYPosition;
             set
             {
-                this._scrollPosition = value;
-                OnPropertyChanged(nameof(ScrollPosition));
+                this._scrollYPosition = value;
+                OnPropertyChanged(nameof(ScrollYPosition));
             }
         }
         /// <summary>
@@ -53,6 +53,7 @@ namespace Xamarin.Poke.CustomControls
         /// <param name="args">The scroll event arguments.</param>
         public void OnScrolled(CancelableScrolledEventArgs args)
         {
+            this.ScrollYPosition = args.ScrollY;
             Scrolled?.Invoke(this, args);
         }
 

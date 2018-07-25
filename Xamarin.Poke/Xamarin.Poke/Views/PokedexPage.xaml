@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:poke="clr-namespace:Xamarin.Poke"
@@ -7,6 +7,7 @@
 			 xmlns:xfg="clr-namespace:XFGloss;assembly=XFGloss"
              xmlns:bv="clr-namespace:Xamarin.Poke.Behaviors"
 			 xmlns:c="clr-namespace:Xamarin.Poke.CustomControls"
+             xmlns:co="clr-namespace:Xamarin.Poke.Components"
 			 Appearing="ContentPage_Appearing"
              BackgroundColor="{StaticResource backgroundColor}">
     <ContentPage.Content>
@@ -69,142 +70,7 @@
 					</c:CustomListView.ItemTemplate>
 				</c:CustomListView>
 
-				<ContentView HeightRequest="200"
-							 x:Name="header"
-							 BackgroundColor="{StaticResource principalColor}"
-							 AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"  
-							 AbsoluteLayout.LayoutBounds="0,0,1,-1" Padding="0" Margin="0">
-                    <!--<ContentView.Behaviors>
-                        <bv:ColapseBehavior ReferenceAnchorHeight="{Binding ScrollPosition, Source={x:Reference monsterResumeListView}}"/>
-                    </ContentView.Behaviors>-->
-					<AbsoluteLayout>
-						
-						
-						<Label x:Name="headerSubTitulo" 
-							   FontFamily="{StaticResource font8bit}"
-							   FontSize="{StaticResource fontSmall}"
-						       TextColor="{StaticResource titleBarColor}"
-						       Text="região"
-							   AbsoluteLayout.LayoutFlags="PositionProportional"
-							   AbsoluteLayout.LayoutBounds="0.5,0.3"
-							   VerticalOptions="EndAndExpand"
-							   VerticalTextAlignment="End"
-							   HorizontalOptions="CenterAndExpand"
-							   HorizontalTextAlignment="Center"/>
-						<Label x:Name="headerTitulo"
-							   FontFamily="{StaticResource font8bit}"
-							   FontSize="{StaticResource fontBig}"
-							   TextColor="{StaticResource titleBarColor}"
-							   Text="KANTO"
-							   AbsoluteLayout.LayoutFlags="PositionProportional"
-							   AbsoluteLayout.LayoutBounds="0.5,0.6"
-							   VerticalOptions="StartAndExpand"
-							   VerticalTextAlignment="Start"
-							   HorizontalOptions="CenterAndExpand"
-							   HorizontalTextAlignment="Center"/>
-						<AbsoluteLayout x:Name="listViewSelecaoRegiao"
-							AbsoluteLayout.LayoutFlags="PositionProportional"
-										  AbsoluteLayout.LayoutBounds="0.5, 0.5"
-										HeightRequest="550"
-										  Opacity="0">
-							<c:CustomListView AbsoluteLayout.LayoutFlags="All"
-										      AbsoluteLayout.LayoutBounds="0,0,1,1"
-                                              SeparatorVisibility="None"
-										      RowHeight="{StaticResource listViewRowHeight}"
-										      ItemsSource="{Binding Regions}">
-								<c:CustomListView.Header>
-									<ContentView HeightRequest="{StaticResource buttonSize}"></ContentView>
-								</c:CustomListView.Header>
-								<c:CustomListView.Footer>
-									<ContentView HeightRequest="{StaticResource buttonSize}"></ContentView>
-								</c:CustomListView.Footer>
-								<c:CustomListView.ItemTemplate>
-									<DataTemplate>
-										<ViewCell>
-											<Label FontFamily="{StaticResource font8bit}"
-												   FontSize="{StaticResource fontMedium}"
-												   TextColor="{StaticResource titleBarColor}"
-												   Text="{Binding Name}"
-												   VerticalOptions="CenterAndExpand"
-												   VerticalTextAlignment="Center"
-												   HorizontalOptions="CenterAndExpand"
-												   HorizontalTextAlignment="Center"/>
-										</ViewCell>
-									</DataTemplate>
-								</c:CustomListView.ItemTemplate>
-							</c:CustomListView>
-							<c:CustomGradientContentView AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
-														 AbsoluteLayout.LayoutBounds="0,0,1,-1"
-														 HeightRequest="{StaticResource buttonSize}"
-														 StartColor="{StaticResource principalColor}"
-														 EndColor="Transparent"
-                                                         BackgroundColor="Transparent"
-														 Orientation="Vertical"/>
-                            <c:CustomGradientContentView AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
-														 AbsoluteLayout.LayoutBounds="0,1,1,-1"
-														 HeightRequest="{StaticResource buttonSize}"
-														 EndColor="{StaticResource principalColor}"
-														 StartColor="Transparent"
-                                                         BackgroundColor="Transparent"
-														 Orientation="Vertical"/>
-                        </AbsoluteLayout>
-
-						<ContentView AbsoluteLayout.LayoutFlags="PositionProportional"
-									 AbsoluteLayout.LayoutBounds="0.5, 1"
-									 Padding="{StaticResource buttonPadding}">
-							<ContentView.GestureRecognizers>
-								<TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1"/>
-							</ContentView.GestureRecognizers>
-						<Image x:Name="arrow"
-								Source="arrow_white.png"
-								HeightRequest="{StaticResource buttonImageSize}"
-								WidthRequest="{StaticResource buttonImageSize}"
-								BackgroundColor="{StaticResource principalColor}"/>
-						</ContentView>
-						<Grid x:Name="pesquisa"
-							  HeightRequest="{StaticResource buttonSize}"
-							  WidthRequest="{StaticResource screenDensityWidth}"
-							  AbsoluteLayout.LayoutFlags="PositionProportional"
-							  AbsoluteLayout.LayoutBounds="0,0"
-							  TranslationX="{StaticResource screenDensityWidthMinusButtonSize}">
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="{StaticResource buttonSize}"/>
-								<ColumnDefinition Width="*"/>
-							</Grid.ColumnDefinitions>
-							<ContentView Padding="{StaticResource buttonPadding}"
-										 Grid.Column="0"
-										 WidthRequest="{StaticResource buttonSize}">
-								<ContentView.GestureRecognizers>
-									<TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
-								</ContentView.GestureRecognizers>
-								<Image x:Name="search"
-									   HeightRequest="{StaticResource buttonImageSize}"
-									   WidthRequest="{StaticResource buttonImageSize}"
-									   VerticalOptions="CenterAndExpand"
-									   HorizontalOptions="Start"
-									   BackgroundColor="{StaticResource principalColor}"
-									   Source="search_white.png"/>
-							</ContentView>
-                            
-                            <BoxView BackgroundColor="Black"
-                                     Margin="0,10,5,10"
-                                     Grid.Column="1"/>
-                            <BoxView BackgroundColor="White"
-                                     Margin="2,12,7,12"
-                                     Grid.Column="1"/>
-                            <Entry Grid.Column="1"
-								   Opacity="0"
-                                   Margin="0,0,5,0"
-								   x:Name="pesquisaEntry"
-								   PlaceholderColor="{StaticResource textColor}"
-								   Placeholder="Digite o nome..."
-								   HorizontalTextAlignment="Center"
-								   FontFamily="{StaticResource font8bit}"
-								   FontSize="{StaticResource fontSmall}"
-								   TextColor="{StaticResource titleColor}"/>
-						</Grid>
-					</AbsoluteLayout>
-				</ContentView>
+                <co:HeaderPokedex ScrollYPosition="{Binding ScrollYPosition, Source={x:Reference monsterResumeListView}}"/>
 
 			</AbsoluteLayout>
 

@@ -144,7 +144,6 @@ namespace Xamarin.Poke.Droid.Renderers
 
                 // Calculate vertical offset in device-independent pixels (DIPs).
                 var offset = Math.Abs(y) / _density;
-                element.ScrollPosition = offset;
                 var args = new CancelableScrolledEventArgs(0, offset);
 
                 element?.OnScrolled(args);

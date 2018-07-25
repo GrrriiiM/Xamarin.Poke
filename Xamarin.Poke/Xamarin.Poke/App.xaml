@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:b="clr-namespace:Xamarin.Poke.BindingConverters"
@@ -35,6 +35,7 @@
 
         <OnPlatform x:Key="font8bit" x:TypeArguments="x:String">
 			<On Platform="Android">PressStart2P.ttf#PressStart2P</On>
+            <On Platform="iOS">PressStart2P</On>
 		</OnPlatform>
 		
 		<Style x:Key="cellTitle" TargetType="Label">
