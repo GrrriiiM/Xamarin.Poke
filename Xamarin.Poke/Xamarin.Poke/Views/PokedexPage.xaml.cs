@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Poke.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Poke.CustomControls;
 using Xamarin.Poke.ViewModels;
 using static Xamarin.Poke.CustomControls.CustomListView;
 
@@ -33,6 +35,7 @@ namespace Xamarin.Poke.Views
         private double buttonSize = (double)App.Current.Resources["buttonSize"];
         private double screenHeight = (double)App.Current.Resources["screenDensityHeight"];
         private double screenWidth = (double)App.Current.Resources["screenDensityWidth"];
+        private double density = (double)App.Current.Resources["screenDensity"];
 
         private void MonsterResumeListView_Scrolled(object sender, CancelableScrolledEventArgs e)
         {
@@ -161,6 +164,102 @@ namespace Xamarin.Poke.Views
                 }
             });
 
+        }
+
+        private void monsterResumeListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            var listView = (CustomListView)sender;
+            App.Current.MontersListAllResumeViewModel.Monster = (MonsterResume)e.SelectedItem;
+            listView.SelectedItem = null;
+            
+        }
+
+        private double position;
+
+        private void TapGestureRecognizer_Tapped_2(object sender, EventArgs e)
+        {
+            var view = (View)sender;
+            var listView = this.monsterResumeListView;
+            var m = this.main;
+            var h = this.header;
+            var mv = this.monsterView;
+            var s = this.sombra;
+            var monsterResume = (MonsterResume)view.BindingContext;
+            App.Current.MontersListAllResumeViewModel.Monster = monsterResume;
+            Task.Run(async () =>
+            {
+                
+                await view.ScaleTo(0.85, 100);
+                await view.ScaleTo(1, 100);
+
+                var scrollPosition = (listView.ScrollPosition);
+                var index = ((IEnumerable<MonsterResume>)listView.ItemsSource).ToList().IndexOf(monsterResume);
+                this.position = ((index * listView.RowHeight) - scrollPosition) + 200;
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    //m.Children.Add(new ContentView { BackgroundColor = Color.Blue },
+                    //new Rectangle(0, position, 1, listView.RowHeight),
+                    //flags: AbsoluteLayoutFlags.WidthProportional | AbsoluteLayoutFlags.XProportional);
+
+                    AbsoluteLayout.SetLayoutFlags(mv, AbsoluteLayoutFlags.WidthProportional | AbsoluteLayoutFlags.XProportional);
+                    AbsoluteLayout.SetLayoutBounds(mv, new Rectangle(0, position, 1, listView.RowHeight));
+                    //mv.Layout(new Rectangle(0, position, this.screenWidth, listView.RowHeight));
+                    mv.IsVisible = true;
+                    s.IsVisible = true;
+                    s.FadeTo(0.7, 200);
+
+                    var an = new Animation(
+                        v =>
+                        {
+
+                            AbsoluteLayout.SetLayoutFlags(mv, AbsoluteLayoutFlags.WidthProportional | AbsoluteLayoutFlags.XProportional);
+                            AbsoluteLayout.SetLayoutBounds(mv, new Rectangle(0, position - (position * v), 1, listView.RowHeight + ((screenHeight - listView.RowHeight) * v)));
+                            this.fechaMonsterView.HeightRequest = v * 40;
+                        }, 0, 1, Easing.SinOut);
+                    an.Commit(this, "teste", length: 300, finished: async (d, b) =>
+                    {
+                        this.fechaMonsterView.FadeTo(1, 100, Easing.SinOut);
+                    });
+                    
+
+                });
+                 
+                
+            });
+            
+        }
+
+        private void TapGestureRecognizer_Tapped_3(object sender, EventArgs e)
+        {
+            var view = (View)sender;
+            var listView = this.monsterResumeListView;
+            var mv = this.monsterView;
+            var s = this.sombra;
+            Task.Run(async () =>
+            {
+                await view.ScaleTo(0.85, 100);
+                await view.ScaleTo(1, 100);
+
+                await this.fechaMonsterView.FadeTo(0, 100, Easing.SinOut);
+                var an = new Animation(
+                    v =>
+                    {
+                        s.Opacity = 0.8 * ((v * 2) > 1 ? 1 : (v * 2));
+                        AbsoluteLayout.SetLayoutFlags(mv, AbsoluteLayoutFlags.WidthProportional | AbsoluteLayoutFlags.XProportional);
+                        AbsoluteLayout.SetLayoutBounds(mv, new Rectangle(0, position - (position * v), 1, listView.RowHeight + ((screenHeight - listView.RowHeight) * v)));
+                        this.fechaMonsterView.HeightRequest = v * 40;
+                    }, 1, 0, Easing.SinOut);
+                an.Commit(this, "teste", length: 300, finished: async (d, b) =>
+                {
+                    await s.FadeTo(0, 200, Easing.SinOut);
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        mv.IsVisible = false;
+                        s.IsVisible = false;
+                    });
+                });
+
+            });
         }
     }
 }

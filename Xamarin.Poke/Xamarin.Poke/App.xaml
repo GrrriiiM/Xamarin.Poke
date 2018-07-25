@@ -8,8 +8,9 @@
 		<b:MinusButtonSizeConverter x:Key="minusButtonSizeConverter"/>
 
 		<x:Int32 x:Key="listViewRowHeight">80</x:Int32>
+        <x:Double x:Key="listViewRowHeightDouble">80</x:Double>
 		<x:Int32 x:Key="listViewRowPadding">5</x:Int32>
-		<x:Double x:Key="listViewImageSize">70</x:Double>
+		<x:Double x:Key="listViewImageSize">60</x:Double>
 
 		<x:Double x:Key="buttonSize">60</x:Double>
 		<x:Double x:Key="buttonPadding">15</x:Double>
@@ -19,6 +20,7 @@
 		<x:Double x:Key="fontMedium">20</x:Double>
 		<x:Double x:Key="fontSmall">12</x:Double>
 
+        <x:Double x:Key="screenDensity">3</x:Double>
 		<x:Double x:Key="screenDensityHeight">720</x:Double>
 		<x:Double x:Key="screenDensityWidth">360</x:Double>
 		<x:Double x:Key="screenDensityWidthMinusButtonSize">300</x:Double>
@@ -27,8 +29,11 @@
 		<Color x:Key="titleBarColor">#FFFFFF</Color>
 		<Color x:Key="textColor">#C0C0C0</Color>
 		<Color x:Key="principalColor">#d62246</Color>
-		
-		<OnPlatform x:Key="font8bit" x:TypeArguments="x:String">
+        <Color x:Key="backgroundColor">#F0F0F0</Color>
+        <Color x:Key="cellColor">#FFFFFF</Color>
+
+
+        <OnPlatform x:Key="font8bit" x:TypeArguments="x:String">
 			<On Platform="Android">PressStart2P.ttf#PressStart2P</On>
 		</OnPlatform>
 		

@@ -30,6 +30,7 @@ namespace Xamarin.Poke
 
             this.MontersListAllResumeViewModel = new MontersListAllResumeViewModel(repositoryService);
 
+            this.Resources["screenDensity"] = DeviceDisplay.ScreenMetrics.Density;
             this.Resources["screenDensityHeight"] = DeviceDisplay.ScreenMetrics.Height / DeviceDisplay.ScreenMetrics.Density;
             this.Resources["screenDensityWidth"] = DeviceDisplay.ScreenMetrics.Width / DeviceDisplay.ScreenMetrics.Density;
             this.Resources["screenDensityWidthMinusButtonSize"] = (double)this.Resources["screenDensityWidth"] - (double)this.Resources["buttonSize"];

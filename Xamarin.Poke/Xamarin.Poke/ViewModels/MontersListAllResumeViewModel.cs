@@ -8,15 +8,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Xamarin.Poke.Helpers;
 
 namespace Xamarin.Poke.ViewModels
 {
-    public class MontersListAllResumeViewModel
+    public class MontersListAllResumeViewModel : ObservableObject
     {
 
         
         public ObservableCollection<MonsterResume> MonstersResume { get; set; } = new ObservableCollection<MonsterResume>();
         public ObservableCollection<Region> Regions { get; set; } = new ObservableCollection<Region>();
+
+        private MonsterResume monster;
+        public MonsterResume Monster
+        {
+            get => this.monster;
+            set => SetProperty(ref this.monster, value);
+        }
+
         public ICommand LoadCommand { get; set; }
 
         private readonly IRepositoryService _repositoryService;

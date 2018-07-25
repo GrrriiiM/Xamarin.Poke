@@ -16,6 +16,16 @@ namespace Xamarin.Poke.CustomControls
         {
         }
 
+        private double _scrollPosition;
+        public double ScrollPosition
+        {
+            get => this._scrollPosition;
+            set
+            {
+                this._scrollPosition = value;
+                OnPropertyChanged(nameof(ScrollPosition));
+            }
+        }
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomListView"/> class.
         /// </summary>

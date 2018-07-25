@@ -118,6 +118,7 @@ namespace Xamarin.Poke.Droid.Renderers
                         {
                             wasTracked = true;
                             _contentOffset += t.GetDeltaY();
+                            
                             SendScrollEvent(_contentOffset);
                             t.SyncState(view);
                         }
@@ -143,6 +144,7 @@ namespace Xamarin.Poke.Droid.Renderers
 
                 // Calculate vertical offset in device-independent pixels (DIPs).
                 var offset = Math.Abs(y) / _density;
+                element.ScrollPosition = offset;
                 var args = new CancelableScrolledEventArgs(0, offset);
 
                 element?.OnScrolled(args);
