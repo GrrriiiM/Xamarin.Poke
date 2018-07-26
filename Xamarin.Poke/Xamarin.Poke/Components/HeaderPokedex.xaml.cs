@@ -22,5 +22,22 @@ namespace Xamarin.Poke.Components
             get => (double)GetValue(ScrollYPositionProperty);
             set => SetValue(ScrollYPositionProperty, value);
         }
+
+
+        void Handle_PanUpdated(object sender, Xamarin.Forms.PanUpdatedEventArgs e)
+        {
+            if (e.StatusType == GestureStatus.Running)
+            {
+                if (this.HeightRequest + e.TotalY >= 200D)
+                {
+                    this.HeightRequest = 200D + e.TotalY;
+                }
+            }
+            else if (e.StatusType == GestureStatus.Completed)
+            {
+                this.HeightRequest = 200D;
+            }
+        }
+
     }
 }

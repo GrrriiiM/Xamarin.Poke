@@ -3,7 +3,10 @@
              x:Class="Xamarin.Poke.Components.HeaderPokedex"
              xmlns:bv="clr-namespace:Xamarin.Poke.Behaviors"
              xmlns:c="clr-namespace:Xamarin.Poke.CustomControls"
-             HeightRequest="200"
+             xmlns:l="clr-namespace:Xamarin.Poke"
+             xmlns:h="clr-namespace:Xamarin.Poke.Helpers"
+             xmlns:xe="clr-namespace:Xamarin.Essentials;assembly:Xamarin.Essentials"
+             HeightRequest="{StaticResource headerExpandedHeight}"
              x:Name="header"
              BackgroundColor="{StaticResource principalColor}"
              AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"  
@@ -12,10 +15,11 @@
         <bv:AnchorBehavior AnchorTo="{Binding ScrollYPosition, Source={x:Reference header}}"
                            PropertyNameToAnchor="HeightRequest"
                            ProportionalValueAnchorTo="-1"
-                           InitialValue="200"
-                           MaxValue="200"
-                           MinValue="60"/>
+                           InitialValue="{StaticResource headerExpandedHeight}"
+                           MaxValue="{StaticResource headerExpandedHeight}"
+                           MinValue="{StaticResource headerHeight}"/>
     </ContentView.Behaviors>
+
     <AbsoluteLayout>
         
         
@@ -31,12 +35,21 @@
                HorizontalOptions="CenterAndExpand"
                HorizontalTextAlignment="Center">
             <Label.Behaviors>
+                    <bv:AnchorBehavior AnchorTo="{Binding Height, Source={x:Reference header}}"
+                                       PropertyNameToAnchor="Opacity"
+                                       MaxValue="1"
+                                       MinValue="0"
+                                       MaxValueAnchorTo="{StaticResource headerExpandedHeight}"
+                                       MinValueAnchorTo="{StaticResource headerSpaceHeight}"/>
                 <bv:AnchorBehavior AnchorTo="{Binding Height, Source={x:Reference header}}"
                                    PropertyNameToAnchor="Opacity"
                                    MaxValue="1"
                                    MinValue="0"
-                                   MaxValueAnchorTo="200"
-                                   MinValueAnchorTo="140"/>
+                                   InitialValue="1"
+                                   ProportionalValueAnchorTo="-1"
+                                   MaxValueAnchorTo="{Binding Source={StaticResource screenDensityHeight}, Converter={StaticResource divideByConvertParameterConverter}, ConverterParameter=2 }"
+                                   MinValueAnchorTo="{StaticResource headerExpandedHeight}"/>
+            
             </Label.Behaviors>
         </Label>
         <Label x:Name="headerTitulo"
@@ -50,33 +63,53 @@
                VerticalTextAlignment="Start"
                HorizontalOptions="CenterAndExpand"
                HorizontalTextAlignment="Center">
-                <Label.Behaviors>
-                    <bv:AnchorBehavior AnchorTo="{Binding Height, Source={x:Reference header}}"
-                                       PropertyNameToAnchor="FontSize"
-                                       MaxValue="{StaticResource fontBig}"
-                                       MinValue="{StaticResource fontSmall}"
-                                       MaxValueAnchorTo="200"
-                                       MinValueAnchorTo="60"/>
-                   <bv:AnchorBehavior AnchorTo="{Binding Height, Source={x:Reference header}}"
-                                       PropertyNameToAnchor="TranslationX"
-                                       MaxValue="0"
-                                       MinValue="-100"
-                                       MaxValueAnchorTo="200"
-                                       MinValueAnchorTo="60"/>
-                
-                </Label.Behaviors>
-            </Label>
+            <Label.Behaviors>
+                <bv:AnchorBehavior AnchorTo="{Binding Height, Source={x:Reference header}}"
+                                   PropertyNameToAnchor="FontSize"
+                                   MaxValue="{StaticResource fontBig}"
+                                   MinValue="{StaticResource fontSmall}"
+                                   MaxValueAnchorTo="{StaticResource headerExpandedHeight}"
+                                   MinValueAnchorTo="{StaticResource headerHeight}"/>
+                <bv:AnchorBehavior AnchorTo="{Binding Height, Source={x:Reference header}}"
+                                   PropertyNameToAnchor="TranslationX"
+                                   MaxValue="0"
+                                   MinValue="-100"
+                                   MaxValueAnchorTo="200"
+                                   MinValueAnchorTo="{StaticResource headerHeight}"/>
+                <bv:AnchorBehavior AnchorTo="{Binding Height, Source={x:Reference header}}"
+                                   PropertyNameToAnchor="Opacity"
+                                   MaxValue="1"
+                                   MinValue="0"
+                                   InitialValue="1"
+                                   ProportionalValueAnchorTo="-1"
+                                   MaxValueAnchorTo="{Binding Source={StaticResource screenDensityHeight}, Converter={StaticResource divideByConvertParameterConverter}, ConverterParameter=2 }"
+                                   MinValueAnchorTo="{StaticResource headerExpandedHeight}"/>
+            
+            
+            </Label.Behaviors>
+        </Label>
         <AbsoluteLayout x:Name="listViewSelecaoRegiao"
-            AbsoluteLayout.LayoutFlags="PositionProportional"
+                           AbsoluteLayout.LayoutFlags="PositionProportional"
                           AbsoluteLayout.LayoutBounds="0.5, 0.5"
-                        HeightRequest="550"
+                          HeightRequest="550"
                           Opacity="0">
+            <AbsoluteLayout.Behaviors>
+                <bv:AnchorBehavior AnchorTo="{Binding Height, Source={x:Reference header}}"
+                                   PropertyNameToAnchor="Opacity"
+                                   MaxValue="1"
+                                   MinValue="0"
+                                   InitialValue="0"
+                                   ProportionalValueAnchorTo="1"
+                                   MinValueAnchorTo="{Binding Source={StaticResource screenDensityHeight}, Converter={StaticResource divideByConvertParameterConverter}, ConverterParameter=2 }"
+                                   MaxValueAnchorTo="{StaticResource screenDensityHeight}"/>
+            </AbsoluteLayout.Behaviors>
             <c:CustomListView AbsoluteLayout.LayoutFlags="All"
                               AbsoluteLayout.LayoutBounds="0,0,1,1"
                               SeparatorVisibility="None"
                               RowHeight="{StaticResource listViewRowHeight}"
                               ItemsSource="{Binding Regions}"
                               BackgroundColor="Transparent">
+
                 <c:CustomListView.Header>
                     <ContentView HeightRequest="{StaticResource buttonSize}"></ContentView>
                 </c:CustomListView.Header>
@@ -112,13 +145,13 @@
                                          StartColor="Transparent"
                                          BackgroundColor="Transparent"
                                          Orientation="Vertical"/>
-        </AbsoluteLayout>
+            </AbsoluteLayout>
 
         <ContentView AbsoluteLayout.LayoutFlags="PositionProportional"
                      AbsoluteLayout.LayoutBounds="0.5, 1"
                      Padding="{StaticResource buttonPadding}">
             <ContentView.GestureRecognizers>
-                <TapGestureRecognizer/>
+                <PanGestureRecognizer PanUpdated="Handle_PanUpdated" TouchPoints="1"/>
             </ContentView.GestureRecognizers>
 
                 <ContentView.Behaviors>
@@ -126,8 +159,8 @@
                                        PropertyNameToAnchor="Opacity"
                                        MaxValue="1"
                                        MinValue="0"
-                                       MaxValueAnchorTo="200"
-                                       MinValueAnchorTo="140"/>
+                                       MaxValueAnchorTo="{StaticResource headerExpandedHeight}"
+                                       MinValueAnchorTo="{StaticResource headerSpaceHeight}"/>
                 </ContentView.Behaviors>
             <Image x:Name="arrow"
                     Source="arrow_white.png"

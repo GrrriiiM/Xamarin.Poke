@@ -40,7 +40,7 @@ namespace Xamarin.Poke.Behaviors
                         v = v + ab.MinValue; 
                     }
 
-                v = v * ab.ProportionalValueAnchorTo;
+                    v = v * ab.ProportionalValueAnchorTo;
                     v = v + ab.InitialValue;
 
                     
@@ -73,18 +73,31 @@ namespace Xamarin.Poke.Behaviors
         } = 1;
 
 
+
+
+        public static readonly BindableProperty MinValueAnchorToProperty = BindableProperty.Create(
+            nameof(MinValueAnchorTo),
+            typeof(double),
+            typeof(AnchorBehavior),
+            -1D);
+
         public double MinValueAnchorTo
         {
-            get;
-            set;
-        } = -1;
+            get => (double)GetValue(MinValueAnchorToProperty);
+            set => SetValue(MinValueAnchorToProperty, value);
+        }
+
+        public static readonly BindableProperty MaxValueAnchorToProperty = BindableProperty.Create(
+            nameof(MaxValueAnchorTo),
+            typeof(double),
+            typeof(AnchorBehavior),
+            -1D);
 
         public double MaxValueAnchorTo
         {
-            get;
-            set;
-        } = -1;
-
+            get => (double)GetValue(MaxValueAnchorToProperty);
+            set => SetValue(MaxValueAnchorToProperty, value);
+        }
 
         public string PropertyNameToAnchor
         {

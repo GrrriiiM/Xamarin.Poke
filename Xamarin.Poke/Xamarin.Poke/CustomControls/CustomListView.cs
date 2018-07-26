@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace Xamarin.Poke.CustomControls
 {
-    public class CustomListView : Xamarin.Forms.ListView, Components.IScrollable
+    public class CustomListView : Xamarin.Forms.ListView
     {
         #region Ctor
 

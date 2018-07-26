@@ -6,11 +6,17 @@
 	<Application.Resources>
 		<b:IntConverter x:Key="intConverter"/>
 		<b:MinusButtonSizeConverter x:Key="minusButtonSizeConverter"/>
+        <b:MultiBindingMinusCalcConverter x:Key="multiBindingMinusCalcConverter"/>
+        <b:DivideByConvertParameterConverter x:Key="divideByConvertParameterConverter"/>
 
 		<x:Int32 x:Key="listViewRowHeight">80</x:Int32>
         <x:Double x:Key="listViewRowHeightDouble">80</x:Double>
 		<x:Int32 x:Key="listViewRowPadding">5</x:Int32>
 		<x:Double x:Key="listViewImageSize">60</x:Double>
+
+        <x:Double x:Key="headerHeight">60</x:Double>
+        <x:Double x:Key="headerSpaceHeight">140</x:Double>     
+        <x:Double x:Key="headerExpandedHeight">200</x:Double>
 
 		<x:Double x:Key="buttonSize">60</x:Double>
 		<x:Double x:Key="buttonPadding">15</x:Double>
