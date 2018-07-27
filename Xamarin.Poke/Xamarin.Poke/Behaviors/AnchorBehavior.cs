@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using Xamarin.Forms;
 
@@ -28,6 +29,10 @@ namespace Xamarin.Poke.Behaviors
                 if (ab.View != null)
                 {
                     var v = (double)n;
+                    if (ab.View.Behaviors.Any(x => ab.ConflictAnchorBehaviors(x, v)))
+                    {
+                        return;
+                    }
 
                     var d = ab.MaxValue - ab.MinValue;
                     
@@ -43,9 +48,8 @@ namespace Xamarin.Poke.Behaviors
                     v = v * ab.ProportionalValueAnchorTo;
                     v = v + ab.InitialValue;
 
+
                     
-
-
                     if (v >= ab.MaxValue)
                     {
                         v = ab.MaxValue;
@@ -59,6 +63,34 @@ namespace Xamarin.Poke.Behaviors
                 }
             }
         );
+
+
+        public bool ConflictAnchorBehaviors(Behavior b, double value)
+        {
+            var bv = b as AnchorBehavior;
+
+            if (bv == null)
+            {
+                return false;
+            }
+
+            if (bv != this)
+            {
+                if (bv.PropertyNameToAnchor == this.PropertyNameToAnchor)
+                {
+                    if (value > this.MaxValueAnchorTo && bv.MinValueAnchorTo >= this.MaxValueAnchorTo)
+                    {
+                        return true;
+                    }
+                    if (value < this.MinValueAnchorTo && bv.MaxValueAnchorTo <= this.MinValueAnchorTo)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
 
         public double AnchorTo
         {
@@ -155,6 +187,8 @@ namespace Xamarin.Poke.Behaviors
 
             base.OnAttachedTo(bindable);
         }
+
+
 
 
     }

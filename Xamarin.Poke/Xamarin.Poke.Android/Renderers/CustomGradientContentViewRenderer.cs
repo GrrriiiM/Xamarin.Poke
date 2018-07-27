@@ -7,6 +7,7 @@ using Xamarin.Poke.Droid.Renderers;
 using Android.Views;
 
 [assembly: Xamarin.Forms.ExportRenderer(typeof(CustomGradientContentView), typeof(CustomGradientContentViewRenderer))]
+
 namespace Xamarin.Poke.Droid.Renderers
 {
     public class CustomGradientContentViewRenderer : ViewRenderer<CustomGradientContentView, View>
