@@ -2,8 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:poke="clr-namespace:Xamarin.Poke"
-             x:Class="Xamarin.Poke.Views.PokedexPage"
-			 xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"	
+             x:Class="Xamarin.Poke.Views.PokedexPage"	
 			 xmlns:xfg="clr-namespace:XFGloss;assembly=XFGloss"
              xmlns:bv="clr-namespace:Xamarin.Poke.Behaviors"
 			 xmlns:c="clr-namespace:Xamarin.Poke.CustomControls"
@@ -30,49 +29,35 @@
 					<c:CustomListView.ItemTemplate>
 						<DataTemplate>
 							<ViewCell>
-                                <ContentView Padding="{StaticResource listViewRowPadding}">
-                                    <ContentView.GestureRecognizers>
+                                <co:MonsterCellView BindingContext="{Binding .}">
+                                    <co:MonsterCellView.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_2"/>
-                                    </ContentView.GestureRecognizers>
-								    <Grid Padding="{StaticResource listViewRowPadding}"
-                                          BackgroundColor="White">
-									    <Grid.RowDefinitions>
-										    <RowDefinition Height="2*"/>
-										    <RowDefinition Height="*"/>
-									    </Grid.RowDefinitions>
-									    <Grid.ColumnDefinitions>
-										    <ColumnDefinition Width="auto"/>
-										    <ColumnDefinition Width="*"/>
-									    </Grid.ColumnDefinitions>
-									    <ff:CachedImage TransformPlaceholders="True"
-													    Source="pokeball.png"
-													    LoadingPlaceholder="pokeball.png"
-													    Aspect="AspectFill"
-													    CacheType="Memory"
-													    HeightRequest="{StaticResource listViewImageSize}"
-													    WidthRequest="{StaticResource listViewImageSize}"
-													    Grid.Column="0"
-													    Grid.Row="0"
-													    Grid.RowSpan="2"/>	
-									    <Label Text="{Binding Name}"
-										       Grid.Column="1"
-										       Grid.Row="0"
-										       Style="{StaticResource cellTitle}"/>
-
-									    <Label Text="{Binding Id, StringFormat='#{0}'}"
-										       Grid.Column="1"
-										       Grid.Row="1"
-										       Style="{StaticResource cellText}"/>
-								    </Grid>
-                                </ContentView>
+                                    </co:MonsterCellView.GestureRecognizers>
+                                </co:MonsterCellView>
                             </ViewCell>
 						</DataTemplate>
 					</c:CustomListView.ItemTemplate>
 				</c:CustomListView>
+                <ContentView AbsoluteLayout.LayoutFlags="PositionProportional"
+                             AbsoluteLayout.LayoutBounds="1,1,100,100"
+                             Margin="20"
+                             BackgroundColor="Blue">
+                    
+                </ContentView>
+                <ContentView x:Name="shadowListView"
+                             AbsoluteLayout.LayoutFlags="All"
+                             AbsoluteLayout.LayoutBounds="0,0,1,1"
+                             BackgroundColor="Black"/>
 
-                <co:HeaderPokedex ScrollYPosition="{Binding ScrollYPosition, Source={x:Reference monsterResumeListView}}"/>
-
-			</AbsoluteLayout>
+                <co:HeaderPokedex ScrollYPosition="{Binding ScrollYPosition, Source={x:Reference monsterResumeListView}}">
+                    <co:HeaderPokedex.Behaviors>
+                        <bv:ObservablePropertyBehavior PropertyName="Height"
+                                                       MinValue="{StaticResource headerExpandedHeight}"
+                                                       MaxValue="{StaticResource screenDensityHeight}"
+                                                       ObservablePropertyChanged="HeaderPokedex_ObservablePropertyChanged"/>
+                    </co:HeaderPokedex.Behaviors>
+                </co:HeaderPokedex>
+            </AbsoluteLayout>
 
             <ContentView x:Name="sombra" 
                          BackgroundColor="Black"
@@ -81,58 +66,14 @@
                          AbsoluteLayout.LayoutFlags="All"
                          AbsoluteLayout.LayoutBounds="0, 0, 1, 1"/>
 
-            <ContentView x:Name="monsterView" 
-                         Padding="{StaticResource listViewRowPadding}"
-                         AbsoluteLayout.LayoutFlags="All"
-                         AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
-                         BindingContext="{Binding MontersListAllResumeViewModel, Source={x:Static poke:App.Current}}"
-                         IsVisible="False">         
-                <StackLayout BackgroundColor="White" Padding="0" Margin="0" Spacing="0">
-                    <ContentView x:Name="fechaMonsterView"  Padding="0" Margin="0"
-                                 HorizontalOptions="Center"
-                                 HeightRequest="0"
-                                 Opacity="0">
-                        <ContentView.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_3"/>
-                        </ContentView.GestureRecognizers>
-                        <Image  HeightRequest="{StaticResource buttonImageSize}" 
-                                Source="arrow.png"
-                                WidthRequest="{StaticResource buttonImageSize}"/>
-                    </ContentView>
-                    <ContentView HeightRequest="70" Padding="0">
-                        <Grid Padding="{StaticResource listViewRowPadding}"
-                              BindingContext="{Binding Monster}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="2*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <ff:CachedImage TransformPlaceholders="True"
-													            Source="pokeball.png"
-													            LoadingPlaceholder="pokeball.png"
-													            Aspect="AspectFill"
-													            CacheType="Memory"
-													            HeightRequest="{StaticResource listViewImageSize}"
-													            WidthRequest="{StaticResource listViewImageSize}"
-													            Grid.Column="0"
-													            Grid.Row="0"
-													            Grid.RowSpan="2"/>
-                            <Label Text="{Binding Name}"
-										               Grid.Column="1"
-										               Grid.Row="0"
-										               Style="{StaticResource cellTitle}"/>
-
-                            <Label Text="{Binding Id, StringFormat='#{0}'}"
-										               Grid.Column="1"
-										               Grid.Row="1"
-										               Style="{StaticResource cellText}"/>
-                        </Grid>
-                    </ContentView>
-                </StackLayout>
-            </ContentView>
+            <co:PokemonView x:Name="monsterView" 
+                            Padding="{StaticResource listViewRowPadding}"
+                            AbsoluteLayout.LayoutFlags="All"
+                            AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                            BindingContext="{Binding MontersListAllResumeViewModel, Source={x:Static poke:App.Current}}"
+                            TranslationY="5000">         
+                
+            </co:PokemonView>
 
         </AbsoluteLayout>
     </ContentPage.Content>

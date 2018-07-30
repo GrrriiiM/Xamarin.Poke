@@ -21,6 +21,7 @@ namespace Xamarin.Poke
         }
 
 
+
         private IRepositoryService repositoryService;
 
         public App ()
@@ -31,7 +32,7 @@ namespace Xamarin.Poke
             this.MontersListAllResumeViewModel = new MontersListAllResumeViewModel(repositoryService);
 
             this.Resources["screenDensity"] = DeviceDisplay.ScreenMetrics.Density;
-            this.Resources["screenDensityHeight"] = DeviceDisplay.ScreenMetrics.Height / DeviceDisplay.ScreenMetrics.Density;
+            this.Resources["screenDensityHeight"] = (DeviceDisplay.ScreenMetrics.Height / DeviceDisplay.ScreenMetrics.Density) - new OnPlatform<double> { Android = 20 };
             this.Resources["screenDensityWidth"] = DeviceDisplay.ScreenMetrics.Width / DeviceDisplay.ScreenMetrics.Density;
             this.Resources["screenDensityWidthMinusButtonSize"] = (double)this.Resources["screenDensityWidth"] - (double)this.Resources["buttonSize"];
 
@@ -41,8 +42,10 @@ namespace Xamarin.Poke
         public MontersListAllResumeViewModel MontersListAllResumeViewModel { get; private set; }
         public PokemonViewModel PokemonViewModel { get; private set; } = new PokemonViewModel();
 
-
-
+        public T GetResource<T>(string name)
+        {
+            return (T)this.Resources[name];
+        }
 
         protected override void OnStart ()
 		{

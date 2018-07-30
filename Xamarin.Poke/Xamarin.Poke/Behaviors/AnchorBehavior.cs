@@ -21,51 +21,78 @@ namespace Xamarin.Poke.Behaviors
             nameof(AnchorTo),
             typeof(double),
             typeof(AnchorBehavior),
-            0D, 
+            0D,
             propertyChanged: (b, o, n) =>
             {
-            
+
                 var ab = (AnchorBehavior)b;
-                if (ab.View != null)
-                {
-                    var v = (double)n;
-                    if (ab.View.Behaviors.Any(x => ab.ConflictAnchorBehaviors(x, v)))
-                    {
-                        return;
-                    }
+                var v = (double)n;
+                ab.doBehavior(v);
 
-                    var d = ab.MaxValue - ab.MinValue;
-                    
-                    var i = 1D;
-                    if (ab.MinValueAnchorTo > 0 && ab.MaxValueAnchorTo > 0)
-                    {
-                        i = ab.MaxValueAnchorTo - ab.MinValueAnchorTo;
-                        i = (d) / i;
-                        v = (v - ab.MinValueAnchorTo) * i;
-                        v = v + ab.MinValue; 
-                    }
-
-                    v = v * ab.ProportionalValueAnchorTo;
-                    v = v + ab.InitialValue;
-
-
-                    
-                    if (v >= ab.MaxValue)
-                    {
-                        v = ab.MaxValue;
-                    }
-                    else if (v <= ab.MinValue)
-                    {
-                        v = ab.MinValue;
-                    }
-
-                    ab._property.SetValue(ab.View, v);
-                }
             }
         );
 
+        private void doBehavior(double v)
+        {
+            var ab = this;
+            if (ab.View != null)
+            {
+                
 
-        public bool ConflictAnchorBehaviors(Behavior b, double value)
+                var d = ab.MaxValue - ab.MinValue;
+
+                var i = 1D;
+                if (ab.MinValueAnchorTo > 0 && ab.MaxValueAnchorTo > 0)
+                {
+                    i = ab.MaxValueAnchorTo - ab.MinValueAnchorTo;
+                    i = (d) / i;
+                    v = (v - ab.MinValueAnchorTo) * i;
+                    v = v + ab.MinValue;
+                }
+
+                v = v * ab.ProportionalValueAnchorTo;
+                v = v + ab.InitialValue;
+
+
+                if (v >= ab.MaxValue)
+                {
+                    if (!ab.alredyDoMax)
+                    {
+                        if (!ab.View.Behaviors.Any(x => ab.hasConflict(x, v)))
+                        {
+                            ab._property.SetValue(ab.View, ab.MaxValue);
+                        }
+                        ab.alredyDoMax = true;
+                    }
+                    return;
+                }
+                else if (v <= ab.MinValue)
+                {
+                    if (!ab.alredyDoMin)
+                    {
+                        if (!ab.View.Behaviors.Any(x => ab.hasConflict(x, v)))
+                        {
+                            ab._property.SetValue(ab.View, ab.MinValue);
+                        }
+                        ab.alredyDoMin = true;
+                    }
+                    return;
+                }
+
+                ab.alredyDoMax = false;
+                ab.alredyDoMin = false;
+                if (!ab.View.Behaviors.Any(x => ab.hasConflict(x, v)))
+                {
+                    ab._property.SetValue(ab.View, v);
+                }
+                
+
+            }
+        }
+
+        private bool alredyDoMax = false;
+        private bool alredyDoMin = false;
+        private bool hasConflict(Behavior b, double value)
         {
             var bv = b as AnchorBehavior;
 
@@ -91,7 +118,7 @@ namespace Xamarin.Poke.Behaviors
             return false;
         }
 
-
+       
         public double AnchorTo
         {
             get => (double)GetValue(AnchorToProperty);

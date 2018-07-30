@@ -9,7 +9,13 @@ using Android.OS;
 
 namespace Xamarin.Poke.Droid
 {
-    [Activity(Label = "Xamarin.Poke", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "Xamarin.Poke", 
+        Icon = "@drawable/pokeball", 
+        Theme = "@style/MainTheme", 
+        MainLauncher = true, 
+        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,
+        ScreenOrientation = ScreenOrientation.Portrait,LaunchMode = LaunchMode.SingleTask
+        )]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)

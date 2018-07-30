@@ -176,90 +176,51 @@ namespace Xamarin.Poke.Views
 
         private double position;
 
-        private void TapGestureRecognizer_Tapped_2(object sender, EventArgs e)
+        private async void TapGestureRecognizer_Tapped_2(object sender, EventArgs e)
         {
             var view = (View)sender;
-            var listView = this.monsterResumeListView;
-            var m = this.main;
-            //var h = this.header;
-            var mv = this.monsterView;
-            var s = this.sombra;
             var monsterResume = (MonsterResume)view.BindingContext;
-            App.Current.MontersListAllResumeViewModel.Monster = monsterResume;
-            Task.Run(async () =>
-            {
-                
-                await view.ScaleTo(0.85, 100);
-                await view.ScaleTo(1, 100);
 
-                var scrollPosition = (listView.ScrollYPosition);
-                var index = ((IEnumerable<MonsterResume>)listView.ItemsSource).ToList().IndexOf(monsterResume);
-                this.position = ((index * listView.RowHeight) - scrollPosition) + 200;
-                Device.BeginInvokeOnMainThread(async () =>
-                {
-                    //m.Children.Add(new ContentView { BackgroundColor = Color.Blue },
-                    //new Rectangle(0, position, 1, listView.RowHeight),
-                    //flags: AbsoluteLayoutFlags.WidthProportional | AbsoluteLayoutFlags.XProportional);
-
-                    AbsoluteLayout.SetLayoutFlags(mv, AbsoluteLayoutFlags.WidthProportional | AbsoluteLayoutFlags.XProportional);
-                    AbsoluteLayout.SetLayoutBounds(mv, new Rectangle(0, position, 1, listView.RowHeight));
-                    //mv.Layout(new Rectangle(0, position, this.screenWidth, listView.RowHeight));
-                    mv.IsVisible = true;
-                    s.IsVisible = true;
-                    s.FadeTo(0.7, 200);
-
-                    var an = new Animation(
-                        v =>
-                        {
-
-                            AbsoluteLayout.SetLayoutFlags(mv, AbsoluteLayoutFlags.WidthProportional | AbsoluteLayoutFlags.XProportional);
-                            AbsoluteLayout.SetLayoutBounds(mv, new Rectangle(0, position - (position * v), 1, listView.RowHeight + ((screenHeight - listView.RowHeight) * v)));
-                            this.fechaMonsterView.HeightRequest = v * 40;
-                        }, 0, 1, Easing.SinOut);
-                    an.Commit(this, "teste", length: 300, finished: async (d, b) =>
-                    {
-                        this.fechaMonsterView.FadeTo(1, 100, Easing.SinOut);
-                    });
-                    
-
-                });
-                 
-                
-            });
+            await view.ScaleTo(0.85, 100);
+            await view.ScaleTo(1, 100);
+            this.sombra.Opacity = 0;
+            this.sombra.IsVisible = true;
+            this.sombra.FadeTo(0.8, 250, Easing.SinOut);
+            var scrollPosition = (this.monsterResumeListView.ScrollYPosition);
+            var index = ((IEnumerable<MonsterResume>)this.monsterResumeListView.ItemsSource).ToList().IndexOf(monsterResume);
+            this.position = ((index * this.monsterResumeListView.RowHeight) - scrollPosition) + 200;
             
+            this.monsterView.Open(
+                monsterResume, 
+                new Rectangle(0, position, 1, this.monsterResumeListView.RowHeight),
+                onClosing: async () =>
+                {
+                    await Task.Delay(250);
+                    this.sombra.FadeTo(0, 250, Easing.SinOut);
+                    this.sombra.IsVisible = false;
+                });   
         }
 
-        private void TapGestureRecognizer_Tapped_3(object sender, EventArgs e)
+        
+
+        private void HeaderPokedex_ObservablePropertyChanged(object sender, Behaviors.ObservableBehaviorEventArgs e)
         {
-            var view = (View)sender;
-            var listView = this.monsterResumeListView;
-            var mv = this.monsterView;
-            var s = this.sombra;
-            Task.Run(async () =>
+            if (e.Proportion == 0)
             {
-                await view.ScaleTo(0.85, 100);
-                await view.ScaleTo(1, 100);
-
-                await this.fechaMonsterView.FadeTo(0, 100, Easing.SinOut);
-                var an = new Animation(
-                    v =>
-                    {
-                        s.Opacity = 0.8 * ((v * 2) > 1 ? 1 : (v * 2));
-                        AbsoluteLayout.SetLayoutFlags(mv, AbsoluteLayoutFlags.WidthProportional | AbsoluteLayoutFlags.XProportional);
-                        AbsoluteLayout.SetLayoutBounds(mv, new Rectangle(0, position - (position * v), 1, listView.RowHeight + ((screenHeight - listView.RowHeight) * v)));
-                        this.fechaMonsterView.HeightRequest = v * 40;
-                    }, 1, 0, Easing.SinOut);
-                an.Commit(this, "teste", length: 300, finished: async (d, b) =>
-                {
-                    await s.FadeTo(0, 200, Easing.SinOut);
-                    Device.BeginInvokeOnMainThread(() =>
-                    {
-                        mv.IsVisible = false;
-                        s.IsVisible = false;
-                    });
-                });
-
-            });
+                this.monsterResumeListView.Scale = 1;
+                this.monsterResumeListView.TranslationY = 0;
+                this.shadowListView.Opacity = 0;
+                this.shadowListView.TranslationY = 5000;
+            }
+            else
+            {
+                var p = ((e.Proportion * 2) > 1 ? 1 : (e.Proportion * 2));
+                this.monsterResumeListView.Scale = 1 - (0.05 * p);
+                this.monsterResumeListView.TranslationY = this.monsterResumeListView.Height * 0.05 * p;
+                this.shadowListView.Opacity = 0.8 * p;
+                this.shadowListView.TranslationY = 0;
+            }
+            
         }
     }
 }

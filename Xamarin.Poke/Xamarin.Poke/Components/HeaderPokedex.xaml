@@ -2,10 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              x:Class="Xamarin.Poke.Components.HeaderPokedex"
              xmlns:bv="clr-namespace:Xamarin.Poke.Behaviors"
-             xmlns:c="clr-namespace:Xamarin.Poke.CustomControls"
-             xmlns:l="clr-namespace:Xamarin.Poke"
-             xmlns:h="clr-namespace:Xamarin.Poke.Helpers"
-             xmlns:xe="clr-namespace:Xamarin.Essentials;assembly:Xamarin.Essentials"
+             xmlns:co="clr-namespace:Xamarin.Poke.Components"
              HeightRequest="{StaticResource headerExpandedHeight}"
              x:Name="header"
              BackgroundColor="{StaticResource principalColor}"
@@ -18,39 +15,28 @@
                            InitialValue="{StaticResource headerExpandedHeight}"
                            MaxValue="{StaticResource headerExpandedHeight}"
                            MinValue="{StaticResource headerHeight}"/>
+        <bv:ObservablePropertyBehavior PropertyName="Height"
+                                       MaxValue="{StaticResource headerExpandedHeight}"
+                                       MinValue="{StaticResource headerHeight}"
+                                       ObservablePropertyChanged="ObservablePropertyBehaviorCollapse_ObservablePropertyChanged"/>
+        <bv:ObservablePropertyBehavior PropertyName="Height"
+                                       MaxValue="{StaticResource screenDensityHeight}"
+                                       MinValue="{StaticResource headerExpandedHeight}"
+                                       ObservablePropertyChanged="ObservablePropertyBehaviorExpand_ObservablePropertyChanged"/>
     </ContentView.Behaviors>
-
+    
     <AbsoluteLayout>
-        
-        
         <Label x:Name="headerSubTitulo" 
                FontFamily="{StaticResource font8bit}"
                FontSize="{StaticResource fontSmall}"
                TextColor="{StaticResource titleBarColor}"
                Text="região"
                AbsoluteLayout.LayoutFlags="PositionProportional"
-               AbsoluteLayout.LayoutBounds="0.5,0.3"
+               AbsoluteLayout.LayoutBounds="0.5, 0.3"
                VerticalOptions="EndAndExpand"
                VerticalTextAlignment="End"
                HorizontalOptions="CenterAndExpand"
                HorizontalTextAlignment="Center">
-            <Label.Behaviors>
-                <bv:AnchorBehavior AnchorTo="{Binding Height, Source={x:Reference header}}"
-                                   PropertyNameToAnchor="Opacity"
-                                   MaxValue="1"
-                                   MinValue="0"
-                                   MaxValueAnchorTo="{StaticResource headerExpandedHeight}"
-                                   MinValueAnchorTo="{StaticResource headerSpaceHeight}"/>
-                <bv:AnchorBehavior AnchorTo="{Binding Height, Source={x:Reference header}}"
-                                   PropertyNameToAnchor="Opacity"
-                                   MaxValue="1"
-                                   MinValue="0"
-                                   InitialValue="1"
-                                   ProportionalValueAnchorTo="-1"
-                                   MaxValueAnchorTo="{Binding Source={StaticResource screenDensityHeight}, Converter={StaticResource divideByConvertParameterConverter}, ConverterParameter=2 }"
-                                   MinValueAnchorTo="{StaticResource headerExpandedHeight}"/>
-            
-            </Label.Behaviors>
         </Label>
         <Label x:Name="headerTitulo"
                FontFamily="{StaticResource font8bit}"
@@ -63,165 +49,44 @@
                VerticalTextAlignment="Start"
                HorizontalOptions="CenterAndExpand"
                HorizontalTextAlignment="Center">
-            <Label.Behaviors>
-                <bv:AnchorBehavior AnchorTo="{Binding Height, Source={x:Reference header}}"
-                                   PropertyNameToAnchor="FontSize"
-                                   MaxValue="{StaticResource fontBig}"
-                                   MinValue="{StaticResource fontSmall}"
-                                   MaxValueAnchorTo="{StaticResource headerExpandedHeight}"
-                                   MinValueAnchorTo="{StaticResource headerHeight}"/>
-                <bv:AnchorBehavior AnchorTo="{Binding Height, Source={x:Reference header}}"
-                                   PropertyNameToAnchor="TranslationX"
-                                   MaxValue="0"
-                                   MinValue="-100"
-                                   MaxValueAnchorTo="200"
-                                   MinValueAnchorTo="{StaticResource headerHeight}"/>
-                <bv:AnchorBehavior AnchorTo="{Binding Height, Source={x:Reference header}}"
-                                   PropertyNameToAnchor="Opacity"
-                                   MaxValue="1"
-                                   MinValue="0"
-                                   InitialValue="1"
-                                   ProportionalValueAnchorTo="-1"
-                                   MaxValueAnchorTo="{Binding Source={StaticResource screenDensityHeight}, Converter={StaticResource divideByConvertParameterConverter}, ConverterParameter=2 }"
-                                   MinValueAnchorTo="{StaticResource headerExpandedHeight}"/>
-            
-            
-            </Label.Behaviors>
         </Label>
-        <AbsoluteLayout x:Name="listViewSelecaoRegiao"
-                           AbsoluteLayout.LayoutFlags="All"
-                          AbsoluteLayout.LayoutBounds="0.5, 0.5, 1, 1"
-                          HeightRequest="550"
-                          Opacity="0">
-            <AbsoluteLayout.Behaviors>
-                <bv:AnchorBehavior AnchorTo="{Binding Height, Source={x:Reference header}}"
-                                   PropertyNameToAnchor="Opacity"
-                                   MaxValue="1"
-                                   MinValue="0"
-                                   InitialValue="0"
-                                   ProportionalValueAnchorTo="1"
-                                   MinValueAnchorTo="{Binding Source={StaticResource screenDensityHeight}, Converter={StaticResource divideByConvertParameterConverter}, ConverterParameter=2 }"
-                                   MaxValueAnchorTo="{StaticResource screenDensityHeight}"/>
-            </AbsoluteLayout.Behaviors>
-            <c:CustomListView AbsoluteLayout.LayoutFlags="All"
-                              AbsoluteLayout.LayoutBounds="0,0,1,1"
-                              SeparatorVisibility="None"
-                              RowHeight="{StaticResource listViewRowHeight}"
-                              ItemsSource="{Binding Regions}"
-                              BackgroundColor="Transparent">
-
-                <c:CustomListView.Header>
-                    <ContentView HeightRequest="{StaticResource buttonSize}"></ContentView>
-                </c:CustomListView.Header>
-                <c:CustomListView.Footer>
-                    <ContentView HeightRequest="{StaticResource buttonSize}"></ContentView>
-                </c:CustomListView.Footer>
-                <c:CustomListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Label FontFamily="{StaticResource font8bit}"
-                                   FontSize="{StaticResource fontMedium}"
-                                   TextColor="{StaticResource titleBarColor}"
-                                   Text="{Binding Name}"
-                                   VerticalOptions="CenterAndExpand"
-                                   VerticalTextAlignment="Center"
-                                   HorizontalOptions="CenterAndExpand"
-                                   HorizontalTextAlignment="Center"/>
-                        </ViewCell>
-                    </DataTemplate>
-                </c:CustomListView.ItemTemplate>
-            </c:CustomListView>
-            <c:CustomGradientContentView AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
-                                         AbsoluteLayout.LayoutBounds="0,0,1,-1"
-                                         HeightRequest="{StaticResource buttonSize}"
-                                         StartColor="{StaticResource principalColor}"
-                                         EndColor="Transparent"
-                                         BackgroundColor="Transparent"
-                                         Orientation="Vertical"/>
-            <c:CustomGradientContentView AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
-                                         AbsoluteLayout.LayoutBounds="0,1,1,-1"
-                                         HeightRequest="{StaticResource buttonSize}"
-                                         EndColor="{StaticResource principalColor}"
-                                         StartColor="Transparent"
-                                         BackgroundColor="Transparent"
-                                         Orientation="Vertical"/>
-            </AbsoluteLayout>
-
-        <ContentView AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
+        <ContentView x:Name="headerButtonArea"
+                     AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
                      AbsoluteLayout.LayoutBounds="0.5, 1, 1, -1"
-                     BackgroundColor="Green"
                      Padding="{StaticResource buttonPadding}">
             <ContentView.GestureRecognizers>
                 <TapGestureRecognizer Tapped="Handle_Tapped" />
                 <PanGestureRecognizer PanUpdated="Handle_PanUpdated" TouchPoints="1"/>
             </ContentView.GestureRecognizers>
-
-
-            <ContentView.Behaviors>
-                <bv:AnchorBehavior AnchorTo="{Binding Height, Source={x:Reference header}}"
-                                   PropertyNameToAnchor="Opacity"
-                                   MaxValue="1"
-                                   MinValue="0"
-                                   MaxValueAnchorTo="{StaticResource headerExpandedHeight}"
-                                   MinValueAnchorTo="{StaticResource headerSpaceHeight}"/>
-            </ContentView.Behaviors>
-            <Image x:Name="arrow"
+            <Image x:Name="arrowButton"
                     Source="arrow_white.png"
                     HeightRequest="{StaticResource buttonImageSize}"
                     WidthRequest="{StaticResource buttonImageSize}">
-                <Image.Behaviors>
-                    <bv:AnchorBehavior AnchorTo="{Binding Height, Source={x:Reference header}}"
-                       PropertyNameToAnchor="Rotation"
-                       MaxValue="180"
-                       MinValue="0"
-                       InitialValue="0"
-                       ProportionalValueAnchorTo="1"
-                       MinValueAnchorTo="{Binding Source={StaticResource screenDensityHeight}, Converter={StaticResource divideByConvertParameterConverter}, ConverterParameter=2 }"
-                       MaxValueAnchorTo="{StaticResource screenDensityHeight}"/>
-                </Image.Behaviors>
             </Image>
         </ContentView>
-        <Grid x:Name="pesquisa"
-              HeightRequest="{StaticResource buttonSize}"
-              WidthRequest="{StaticResource screenDensityWidth}"
-              AbsoluteLayout.LayoutFlags="PositionProportional"
-              AbsoluteLayout.LayoutBounds="0,0"
-              TranslationX="{StaticResource screenDensityWidthMinusButtonSize}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="{StaticResource buttonSize}"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <ContentView Padding="{StaticResource buttonPadding}"
-                         Grid.Column="0"
-                         WidthRequest="{StaticResource buttonSize}">
-                <ContentView.GestureRecognizers>
-                    <TapGestureRecognizer/>
-                </ContentView.GestureRecognizers>
-                <Image x:Name="search"
-                       HeightRequest="{StaticResource buttonImageSize}"
-                       WidthRequest="{StaticResource buttonImageSize}"
-                       VerticalOptions="CenterAndExpand"
-                       HorizontalOptions="Start"
-                       BackgroundColor="{StaticResource principalColor}"
-                       Source="search_white.png"/>
-            </ContentView>
-            
-            <BoxView BackgroundColor="Black"
-                     Margin="0,10,5,10"
-                     Grid.Column="1"/>
-            <BoxView BackgroundColor="White"
-                     Margin="2,12,7,12"
-                     Grid.Column="1"/>
-            <Entry Grid.Column="1"
-                   Opacity="0"
-                   Margin="0,0,5,0"
-                   x:Name="pesquisaEntry"
-                   PlaceholderColor="{StaticResource textColor}"
-                   Placeholder="Digite o nome..."
-                   HorizontalTextAlignment="Center"
-                   FontFamily="{StaticResource font8bit}"
-                   FontSize="{StaticResource fontSmall}"
-                   TextColor="{StaticResource titleColor}"/>
-        </Grid>
+
+        <co:SelectRegionView x:Name="selectRegionView"
+                             AbsoluteLayout.LayoutFlags="All"
+                             AbsoluteLayout.LayoutBounds="0,0,1,1"
+                             IsVisible="True"
+                             Opacity="0">
+            <co:SelectRegionView.Margin>
+                <Thickness Bottom="{StaticResource buttonSize}"
+                           Top="{StaticResource buttonSize}">
+                    
+                </Thickness>
+            </co:SelectRegionView.Margin>
+        </co:SelectRegionView>
+
+        <ContentView AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"   
+                     AbsoluteLayout.LayoutBounds="0,1,1,-1" 
+                     BackgroundColor="Transparent" HeightRequest="{StaticResource buttonSize}" >
+            <ContentView.GestureRecognizers>
+                <ClickGestureRecognizer Clicked="Handle_Tapped"/>
+                <TapGestureRecognizer Tapped="Handle_Tapped"/>
+                <PanGestureRecognizer PanUpdated="Handle_PanUpdated" TouchPoints="1"/>
+            </ContentView.GestureRecognizers>
+        </ContentView>
     </AbsoluteLayout>
+
 </ContentView>
