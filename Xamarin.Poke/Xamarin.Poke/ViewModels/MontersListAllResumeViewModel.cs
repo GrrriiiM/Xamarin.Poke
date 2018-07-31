@@ -12,7 +12,7 @@ using Xamarin.Poke.Helpers;
 
 namespace Xamarin.Poke.ViewModels
 {
-    public class MontersListAllResumeViewModel : ObservableObject
+    public class MontersListAllResumeViewModel : ObservableObject, IBaseModelView
     {
 
         

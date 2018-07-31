@@ -1,3 +1,4 @@
+using Ninject;
 using Poke.Repository;
 using Poke.Repository.PokeApi;
 using System;
@@ -21,25 +22,26 @@ namespace Xamarin.Poke
         }
 
 
+        public static IKernel Container { get; set; }
 
-        private IRepositoryService repositoryService;
 
         public App ()
 		{
 			InitializeComponent();
-            this.repositoryService = new RepositoryService();
 
-            this.MontersListAllResumeViewModel = new MontersListAllResumeViewModel(repositoryService);
+            //this.MontersListAllResumeViewModel = new MontersListAllResumeViewModel(new RepositoryService());
 
             this.Resources["screenDensity"] = DeviceDisplay.ScreenMetrics.Density;
             this.Resources["screenDensityHeight"] = (DeviceDisplay.ScreenMetrics.Height / DeviceDisplay.ScreenMetrics.Density) - new OnPlatform<double> { Android = 20 };
             this.Resources["screenDensityWidth"] = DeviceDisplay.ScreenMetrics.Width / DeviceDisplay.ScreenMetrics.Density;
             this.Resources["screenDensityWidthMinusButtonSize"] = (double)this.Resources["screenDensityWidth"] - (double)this.Resources["buttonSize"];
 
+            App.Container = new Ninject.StandardKernel(new IOC());
+
             MainPage = new PokedexPage();
         }
 
-        public MontersListAllResumeViewModel MontersListAllResumeViewModel { get; private set; }
+        //public MontersListAllResumeViewModel MontersListAllResumeViewModel { get; private set; }
         public PokemonViewModel PokemonViewModel { get; private set; } = new PokemonViewModel();
 
         public T GetResource<T>(string name)

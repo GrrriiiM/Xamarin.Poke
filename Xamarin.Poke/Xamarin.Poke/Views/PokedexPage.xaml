@@ -7,14 +7,16 @@
              xmlns:bv="clr-namespace:Xamarin.Poke.Behaviors"
 			 xmlns:c="clr-namespace:Xamarin.Poke.CustomControls"
              xmlns:co="clr-namespace:Xamarin.Poke.Components"
+             xmlns:me="clr-namespace:Xamarin.Poke.MarkupExtension"
+             xmlns:vw="clr-namespace:Xamarin.Poke.ViewModels"
 			 Appearing="ContentPage_Appearing"
+             BindingContext="{me:IOCResource {x:Type vw:MontersListAllResumeViewModel}}"
              BackgroundColor="{StaticResource backgroundColor}">
     <ContentPage.Content>
 		<AbsoluteLayout x:Name="main">
 			<AbsoluteLayout x:Name="monsterListaAllResumeView"
 					 	 AbsoluteLayout.LayoutFlags="All"
-						 AbsoluteLayout.LayoutBounds="0,0,1,1"
-						 BindingContext="{Binding MontersListAllResumeViewModel, Source={x:Static poke:App.Current}}">
+						 AbsoluteLayout.LayoutBounds="0,0,1,1">
 				
 				<c:CustomListView x:Name="monsterResumeListView" 
 								ItemsSource="{Binding MonstersResume}"

@@ -16,6 +16,8 @@ namespace Xamarin.Poke.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class PokedexPage : ContentPage
 	{
+        private MontersListAllResumeViewModel vw;
+
 		public PokedexPage ()
 		{
 			InitializeComponent ();
@@ -24,6 +26,8 @@ namespace Xamarin.Poke.Views
             this.monsterResumeListView.Scrolled += MonsterResumeListView_Scrolled;
             //this.tamanhoHeader = this.header.HeightRequest;
             //this.pesquisaEntry.Unfocused += PesquisaEntry_Unfocused;
+            vw = (MontersListAllResumeViewModel)this.BindingContext;
+
         }
 
         private void PesquisaEntry_Unfocused(object sender, FocusEventArgs e)
@@ -83,7 +87,7 @@ namespace Xamarin.Poke.Views
 
         private void ContentPage_Appearing(object sender, EventArgs e)
         {
-            App.Current.MontersListAllResumeViewModel.LoadCommand.Execute(null);
+            vw.LoadCommand.Execute(null);
         }
 
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
@@ -169,7 +173,7 @@ namespace Xamarin.Poke.Views
         private void monsterResumeListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var listView = (CustomListView)sender;
-            App.Current.MontersListAllResumeViewModel.Monster = (MonsterResume)e.SelectedItem;
+            vw.Monster = (MonsterResume)e.SelectedItem;
             listView.SelectedItem = null;
             
         }
