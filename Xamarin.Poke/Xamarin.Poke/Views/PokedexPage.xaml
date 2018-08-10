@@ -10,7 +10,7 @@
              xmlns:me="clr-namespace:Xamarin.Poke.MarkupExtension"
              xmlns:vw="clr-namespace:Xamarin.Poke.ViewModels"
 			 Appearing="ContentPage_Appearing"
-             BindingContext="{me:IOCResource {x:Type vw:MontersListAllResumeViewModel}}"
+             BindingContext="{me:IOCResource TypeInstance={x:Type vw:MontersListAllResumeViewModel}}"
              BackgroundColor="{StaticResource backgroundColor}">
     <ContentPage.Content>
 		<AbsoluteLayout x:Name="main">
